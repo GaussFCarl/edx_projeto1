@@ -38,14 +38,18 @@ class Nota(db.Model):
     valor_operacoes = db.Column(db.Numeric(10, 2), nullable=False)
     trades = db.relationship("Trade", backref="nota", lazy=True)
 
-
+    def add_trade(self, ativo,qtd,financeiro,daytrade):
+        t = Trade(ativo=ativo, nota_id=self.id,qtd=qtd,financeiro=financeiro,daytrade=daytrade)
+        db.session.add(t)
+        db.session.commit()
 
 class Trade(db.Model):
     __tablename__ = "trades"
     id = db.Column(db.Integer, primary_key=True)
-    nota_id = db.Column(db.Integer, db.ForeignKey("notas.id", nullable=False)
-    pregao = db.Column(db.Date, nullable=False)
+    nota_id = db.Column(db.Integer, db.ForeignKey("notas.id"), nullable=False)
     ativo = db.Column(db.String(10), nullable=False)
     qtd = db.Column(db.Integer, nullable=False)
     financeiro = db.Column(db.Numeric(10, 2), nullable=False)
     daytrade = db.Column(db.Boolean, default = False , nullable=False)
+
+

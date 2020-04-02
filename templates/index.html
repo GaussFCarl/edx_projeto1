@@ -10,19 +10,28 @@
     <form action="{{ url_for('book') }}" method="post">
 
         <div class="form-group">
-            <select class="form-control" name="flight_id">
-                {% for flight in flights %}
-                    <option value="{{ flight.id }}">{{ flight.origin }} to {{ flight.destination }}</option>
+            <select class="form-control" name="nota_id">
+                {% for nota in notas %}
+                    <option value="{{ nota.id }}">{{ nota.numero }} dia {{ nota.pregao }}</option>
                 {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
-            <input class="form-control" name="name" placeholder="Passenger Name">
+            <input class="form-control" name="ativo" placeholder="Ativo">
         </div>
-
         <div class="form-group">
-            <button class="btn btn-primary">Book Flight</button>
+            <input type=number step=100 class="form-control" name="qtd" placeholder="Quantidade">
+        </div>
+        <div class="form-group">
+            <input type=number step=0.01 class="form-control" name="financeiro" placeholder="Financeiro">
+        </div>
+        <div class="form-group">
+            <input type="checkbox"  name="daytrade" placeholder="Daytrade">
+            <label>daytrade</label>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Guardar Trade</button>
         </div>
 
     </form>
