@@ -1,24 +1,24 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Flight
+    Nota
 {% endblock %}
 
 {% block body %}
-    <h1>Flight Details</h1>
+    <h1>Nota Details</h1>
 
     <ul>
-        <li>Origin: {{ flight.origin }}</li>
-        <li>Destination: {{ flight.destination }}</li>
-        <li>Duration: {{ flight.duration}} minutes</li>
+        <li>numero : {{ nota.numero }}</li>
+        <li>pregao : {{ nota.pregao}}</li>
+        <li>financeiro : {{ nota.valor_operacoes}} </li>
     </ul>
 
-    <h2>Passengers</h2>
+    <h2>Trades</h2>
     <ul>
-        {% for passenger in passengers %}
-            <li>{{ passenger.name }}</li>
+        {% for trade in trades %}
+            <li>{{ trade.ativo}}, {{ trade.qtd}}, {{ trade.financeiro}}</li>
         {% else %}
-            <li>No passengers.</li>
+            <li>No trades.</li>
         {% endfor %}
     </ul>
 

@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Flights
+    Notas
 {% endblock %}
 
 {% block body %}
-    <h1>All Flights</h1>
+    <h1>Todas as Notas</h1>
 
     <ul>
-        {% for flight in flights %}
+        {% for nota in notas %}
             <li>
-                <a href="{{ url_for('flight', flight_id=flight.id) }}">
-                    {{ flight.origin }} to {{ flight.destination }}
+                <a href="{{ url_for('nota', nota_id=nota.id) }}">
+                    {{ nota.numero}} dia {{ nota.pregao}}
                 </a>
             </li>
         {% endfor %}

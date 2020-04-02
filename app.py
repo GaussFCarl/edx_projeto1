@@ -2,10 +2,6 @@ from flask import Flask, render_template, jsonify, request
 from models import *
 
 app = Flask(__name__)
-#engine = create_engine(os.getenv("DATABASE_URL"))
-#db = scoped_session(sessionmaker(bind=engine))
-
-#app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql+psycopg2://postgres:L30051992z@localhost:5432/edx_projeto1'
 db.init_app(app)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -19,7 +15,7 @@ def index():
 
 @app.route("/book", methods=["POST"])
 def book():
-    """Book a flight."""
+    """Add Trades."""
 
     # Get form information.
     ativo = request.form.get("ativo")
@@ -34,45 +30,45 @@ def book():
     return render_template("success.html")
 
 
-@app.route("/flights")
-def flights():
+@app.route("/notas")
+def notas():
     """List all flights."""
 
-    flights = Flight.query.all()
-    return render_template("flights.html", flights=flights)
+    notas = Nota.query.all()
+    return render_template("flights.html", notas=notas)
 
 
-@app.route("/flights/<int:flight_id>")
-def flight(flight_id):
+@app.route("/nota/<int:nota_id>")
+def nota(nota_id):
     """List details about a single flight."""
 
     # Make sure flight exists.
 
-    flight = Flight.query.get(flight_id)
-    if not flight:
-        return render_template("error.html", message="No such flight.")
+    nota = Nota.query.get(nota_id)
+    if not nota:
+        return render_template("error.html", message="No such nota.")
 
     # Get all passengers.
-    passengers = flight.passengers
-    return render_template("flight.html", flight=flight, passengers=passengers)
+    trades = nota.trades
+    return render_template("flight.html", nota=nota, trades=trades)
 
 
-@app.route("/api/flights/<int:flight_id>")
-def flight_api(flight_id):
+@app.route("/api/notas/<int:nota_id>")
+def nota_api(nota_id):
     """Return details about a single flight."""
 
-    # Make sure flight exists.
-    flight = Flight.query.get(flight_id)
-    if not flight:
-        return jsonify({"error": "Invalid flight_id"}), 422
+    # Make sure nota exists.
+    nota = Nota.query.get(nota_id)
+    if not nota:
+        return jsonify({"error": "Invalid nota_id"}), 422
 
-    passengers = flight.passengers
-    names = []
-    for passenger in passengers:
-        names.append(passenger.name)
+    trades_aux = nota.trades
+    trades = []
+    for trade in trades_aux:
+        trades.append(trade.ativo)
     return jsonify({
-            "origin": flight.origin,
-            "destination": flight.destination,
-            "duration": flight.duration,
-            "passengers": names
+            "numero": nota.numero,
+            "pregao": nota.pregao,
+            "financeiro": int(100*nota.valor_operacoes),
+            "trades": trades
         })
